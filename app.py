@@ -13,8 +13,8 @@ def pil_to_bytes(pil_img):
     byte_im = buf.getvalue()
     return byte_im
 
-st.set_page_config(page_title="🎨 Artistic Filters", layout="wide")
-st.title("🖌️ Filterify: A Playground for Artistic Image Filters")
+st.set_page_config(page_title="Filterify", layout="wide")
+st.title("Filterify: A Playground for Artistic Image Filters")
 
 # Sidebar
 st.sidebar.header("Choose Filter")
@@ -40,7 +40,7 @@ if not uploaded_file:
     st.info("Upload an image or try one of the sample filters below.")
     
     # Show sample images for each filter
-    st.subheader("🎨 Filter Samples")
+    st.subheader("Filter Samples")
 
     filter_images = {
         "Black and White": "sample1.jpg",
@@ -68,7 +68,7 @@ if uploaded_file:
     input_col, output_col = st.columns(2)
 
     with input_col:
-        st.subheader("🖼️ Original")
+        st.subheader("Original")
         st.image(img, channels="BGR", use_container_width=True)
 
     output_flag = 1
@@ -83,10 +83,10 @@ if uploaded_file:
     elif option == "Sepia / Vintage":
         output = sepia(img)
     elif option == "Vignette Effect":
-        level = st.sidebar.slider("🔆 Vignette Level", 1, 5, 2)  # Avoid zero
+        level = st.sidebar.slider("Vignette Level", 1, 5, 2)  # Avoid zero
         output = vignette(img, level)
     elif option == "Pencil Sketch":
-        ksize = st.sidebar.slider("🌀 Blur Kernel Size", 1, 11, 5, step=2)
+        ksize = st.sidebar.slider("Kernel Size", 1, 11, 5, step=2)
         output = pencil_sketch(img, ksize)
         color = "GRAY"
     elif option == "Cartoonify":
@@ -100,7 +100,7 @@ if uploaded_file:
 
     with output_col:
         if output_flag == 1:
-            st.subheader("✨ Filtered Output")
+            st.subheader("Filtered Output")
             st.image(output, channels=color, use_container_width=True)
 
             if color == "BGR":
