@@ -109,7 +109,7 @@ if uploaded_file:
                 result = Image.fromarray(output)
 
             st.download_button(
-                label="📥 Download Filtered Image",
+                label="Download Filtered Image",
                 data=pil_to_bytes(result),
                 file_name="filtered_output.jpg",
                 mime="image/jpeg",
