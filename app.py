@@ -43,14 +43,14 @@ if not uploaded_file:
     st.subheader("🎨 Filter Samples")
 
     filter_images = {
-        "Black and White": "sample_bw.jpg",
-        "Sepia / Vintage": "sample_sepia.jpg",
-        "Vignette Effect": "sample_vignette.jpg",
-        "Pencil Sketch": "sample_sketch.jpg",
-        "Cartoonify": "sample_cartoon.jpg",
-        "HDR Effect": "sample_hdr.jpg",
-        "Color Invert": "sample_invert.jpg",
-        "Emboss": "sample_emboss.jpg"
+        "Black and White": "sample1.jpg",
+        "Sepia / Vintage": "sample2.jpg",
+        "Vignette Effect": "sample3.jpg",
+        "Pencil Sketch": "sample4.jpg",
+        "Cartoonify": "sample5.jpg",
+        "HDR Effect": "sample6.jpg",
+        "Color Invert": "sample7.jpg",
+        "Emboss": "sample8.jpg"
     }
 
     cols = st.columns(4)  # Divide the screen into 4 columns for better alignment
