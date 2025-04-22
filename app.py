@@ -6,12 +6,12 @@ import cv2
 from PIL import Image
 from filters import *
 
-def get_image_download_link(img, filename, text):
-    buffered = io.BytesIO()
-    img.save(buffered, format="JPEG")
-    img_str = base64.b64encode(buffered.getvalue()).decode()
-    href = f'<a href="data:file/jpg;base64,{img_str}" download="{filename}">📥 {text}</a>'
-    return href
+# Function to convert PIL image to byte format for download
+def pil_to_bytes(pil_img):
+    buf = io.BytesIO()
+    pil_img.save(buf, format="JPEG")
+    byte_im = buf.getvalue()
+    return byte_im
 
 st.set_page_config(page_title="🎨 Artistic Filters", layout="wide")
 st.title("🖌️ Artistic Image Filters Playground")
@@ -33,19 +33,43 @@ option = st.sidebar.radio(
     ),
 )
 
-# Upload section & processing logic
 uploaded_file = st.file_uploader("📁 Upload an image", type=["png", "jpg", "jpeg"])
 
+# Display sample images for each filter if no image is uploaded
+if not uploaded_file:
+    st.info("👈 Upload an image or try one of the sample filters below.")
+    
+    # Show sample images for each filter
+    st.subheader("🎨 Filter Samples")
+
+    filter_images = {
+        "Black and White": "sample_bw.jpg",
+        "Sepia / Vintage": "sample_sepia.jpg",
+        "Vignette Effect": "sample_vignette.jpg",
+        "Pencil Sketch": "sample_sketch.jpg",
+        "Cartoonify": "sample_cartoon.jpg",
+        "HDR Effect": "sample_hdr.jpg",
+        "Color Invert": "sample_invert.jpg",
+        "Emboss": "sample_emboss.jpg"
+    }
+
+    cols = st.columns(4)  # Divide the screen into 4 columns for better alignment
+
+    # Loop through each filter and display its sample
+    for i, (filter_name, image_path) in enumerate(filter_images.items()):
+        with cols[i % 4]:  # Distribute evenly across columns
+            st.image(image_path, caption=filter_name, use_container_width=True)
+
+# Processing the uploaded file
 if uploaded_file:
     raw_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
     img = cv2.imdecode(raw_bytes, cv2.IMREAD_COLOR)
 
-    # Immediately show results without needing scroll
     input_col, output_col = st.columns(2)
 
     with input_col:
         st.subheader("🖼️ Original")
-        st.image(img, channels="BGR", use_column_width=True)
+        st.image(img, channels="BGR", use_container_width=True)
 
     output_flag = 1
     color = "BGR"
@@ -59,7 +83,7 @@ if uploaded_file:
     elif option == "Sepia / Vintage":
         output = sepia(img)
     elif option == "Vignette Effect":
-        level = st.sidebar.slider("🔆 Vignette Level", 0, 5, 2)
+        level = st.sidebar.slider("🔆 Vignette Level", 1, 5, 2)  # Avoid zero
         output = vignette(img, level)
     elif option == "Pencil Sketch":
         ksize = st.sidebar.slider("🌀 Blur Kernel Size", 1, 11, 5, step=2)
@@ -77,18 +101,16 @@ if uploaded_file:
     with output_col:
         if output_flag == 1:
             st.subheader("✨ Filtered Output")
-            st.image(output, channels=color, use_column_width=True)
+            st.image(output, channels=color, use_container_width=True)
 
             if color == "BGR":
                 result = Image.fromarray(output[:, :, ::-1])
             else:
                 result = Image.fromarray(output)
 
-            st.markdown(
-                f"<div style='margin-top:20px;'>{get_image_download_link(result, 'output.jpg', 'Download Filtered Image')}</div>",
-                unsafe_allow_html=True,
+            st.download_button(
+                label="📥 Download Filtered Image",
+                data=pil_to_bytes(result),
+                file_name="filtered_output.jpg",
+                mime="image/jpeg",
             )
-
-else:
-    # Only show uploader if no image is uploaded
-    st.info("👈 Upload an image from the sidebar to begin editing.")
