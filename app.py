@@ -14,7 +14,7 @@ def pil_to_bytes(pil_img):
     return byte_im
 
 st.set_page_config(page_title="🎨 Artistic Filters", layout="wide")
-st.title("🖌️ Artistic Image Filters Playground")
+st.title("🖌️ Filterify: A Playground for Artistic Image Filters")
 
 # Sidebar
 st.sidebar.header("Choose Filter")
