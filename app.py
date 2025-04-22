@@ -17,7 +17,7 @@ st.set_page_config(page_title="🎨 Artistic Filters", layout="wide")
 st.title("🖌️ Artistic Image Filters Playground")
 
 # Sidebar
-st.sidebar.header("🧪 Choose Filter")
+st.sidebar.header("Choose Filter")
 option = st.sidebar.radio(
     "Pick a filter to apply:",
     (
@@ -33,11 +33,11 @@ option = st.sidebar.radio(
     ),
 )
 
-uploaded_file = st.file_uploader("📁 Upload an image", type=["png", "jpg", "jpeg"])
+uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 
 # Display sample images for each filter if no image is uploaded
 if not uploaded_file:
-    st.info("👈 Upload an image or try one of the sample filters below.")
+    st.info("Upload an image or try one of the sample filters below.")
     
     # Show sample images for each filter
     st.subheader("🎨 Filter Samples")
