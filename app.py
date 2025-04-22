@@ -33,7 +33,7 @@ option = st.sidebar.radio(
     ),
 )
 
-uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+uploaded_file = st.file_uploader(type=["png", "jpg", "jpeg"])
 
 # Display sample images for each filter if no image is uploaded
 if not uploaded_file:
